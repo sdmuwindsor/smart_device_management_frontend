@@ -5,6 +5,14 @@ import 'dart:developer';
 
 class LoginPage extends StatelessWidget {
   @override
+  TextEditingController emailController = new TextEditingController();
+  TextEditingController passwordController = new TextEditingController();
+  void loginUser() {
+    log(emailController.text);
+    log(passwordController.text);
+  }
+
+
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
@@ -95,9 +103,10 @@ class LoginPage extends StatelessWidget {
                                   border: Border(bottom: BorderSide(color: Colors.grey.shade100))
                               ),
                               child: TextField(
+                                controller: emailController,
                                 decoration: InputDecoration(
                                     border: InputBorder.none,
-                                    hintText: "Email or Phone number",
+                                    hintText: "Email Address",
                                     hintStyle: TextStyle(color: Colors.grey[400])
                                 ),
                               ),
@@ -105,6 +114,9 @@ class LoginPage extends StatelessWidget {
                             Container(
                               padding: EdgeInsets.all(8.0),
                               child: TextField(
+                                controller: passwordController,
+                                obscuringCharacter: '*', //added obscuringCharacter here
+                                obscureText: true,
                                 decoration: InputDecoration(
                                     border: InputBorder.none,
                                     hintText: "Password",
@@ -128,9 +140,35 @@ class LoginPage extends StatelessWidget {
                             )
                         ),
                         child: Center(
-                          child: Text("Login", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+                          child: GestureDetector(
+                              onTap: () {
+                                if(emailController.text == "" || passwordController.text == "") {
+                                  showDialog(
+                                    context: context,
+                                    builder: (ctx) => AlertDialog(
+                                      content: const Text("Username and Password is Required"),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(ctx).pop();
+                                          },
+                                          child: Container(
+                                            color: Colors.deepPurple,
+                                            padding: const EdgeInsets.all(14),
+                                            child: const Text("OK"),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                } else {
+                                  loginUser();
+                                }
+                              },
+                              child: Text("Login", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),)
+                          )),
                         ),
-                      )),
+                      ),
                       SizedBox(height: 30,),
                       FadeAnimation(1.5, GestureDetector(
                         onTap: () {
