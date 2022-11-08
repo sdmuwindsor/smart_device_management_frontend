@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smart_device_management_frontend/BarChart.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -19,17 +20,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  int _selectedIndex = 0;
+  void _onItemTapped(int index) {
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
   }
 
   @override
@@ -42,11 +35,29 @@ class _MyHomePageState extends State<MyHomePage> {
     // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        centerTitle: true,
+        title: const Text('Smart Device Management'),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(10),
+          ),
+        ),
+        backgroundColor: Colors.grey,
+        automaticallyImplyLeading: false,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.notifications,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              // do something
+            },
+          )
+        ],
       ),
-      body: Center(
+      body: SingleChildScrollView(
+            child:Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
         child: Column(
@@ -64,15 +75,154 @@ class _MyHomePageState extends State<MyHomePage> {
           // center the children vertically; the main axis here is the vertical
           // axis because Columns are vertical (the cross axis would be
           // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
+          // mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'Welcome To Smart Device Management',
-            )
+            Container(
+              margin: const EdgeInsets.only(left: 20.0, top: 20.0),
+              width: (MediaQuery.of(context).size.width),
+              child: const Text('Category', style: TextStyle(fontSize: 20, color: Colors.black), textAlign: TextAlign.left,),
+            ),
+            Container(
+              margin: const EdgeInsets.only(left: 20.0, top: 20.0),
+              height: 150,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: <Widget>[
+                  Container(
+                    width: 200,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white,
+                    ),
+                    margin: const EdgeInsets.only(right: 10.0),
+                    child: const Center(child: Icon(Icons.tv,size: 80,)),
+                  ),
+                  Container(
+                    width: 200,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white,
+                    ),
+                    margin: const EdgeInsets.only(right: 10.0),
+                    child: const Center(child: Icon(Icons.thermostat,size: 80,)),
+                  ),
+                  Container(
+                    width: 200,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white,
+                    ),
+                    margin: const EdgeInsets.only(right: 10.0),
+                    child: const Center(child: Icon(Icons.lightbulb,size: 80,)),
+                  ),
+                  Container(
+                    width: 200,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white,
+                    ),
+                    margin: const EdgeInsets.only(right: 10.0),
+                    child: const Center(child: Icon(Icons.add,size: 80,)),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(left: 20.0, top: 20.0),
+              width: (MediaQuery.of(context).size.width),
+              child: const Text('Rooms', style: TextStyle(fontSize: 20, color: Colors.black), textAlign: TextAlign.left,),
+            ),
+            Container(
+              margin: const EdgeInsets.only(left: 20.0, top: 20.0),
+              height: 120,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: <Widget>[
+                  Container(
+                    width: 120,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white,
+                    ),
+                    margin: const EdgeInsets.only(right: 10.0),
+                    child: const Center(child: Text("Bedroom 1", style: TextStyle(fontSize: 20, color: Colors.black),)),
+                  ),
+                  Container(
+                    width: 120,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white,
+                    ),
+                    margin: const EdgeInsets.only(right: 10.0),
+                    child: const Center(child: Text("Living Room", style: TextStyle(fontSize: 20, color: Colors.black))),
+                  ),
+                  Container(
+                    width: 120,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white,
+                    ),
+                    margin: const EdgeInsets.only(right: 10.0),
+                    child: const Center(child: Text("Bedroom 2",style: TextStyle(fontSize: 20, color: Colors.black))),
+                  ),
+                  Container(
+                    width: 120,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white,
+                    ),
+                    margin: const EdgeInsets.only(right: 10.0),
+                    child: const Center(child: Icon(Icons.add,size: 80,)),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(left: 20.0, top: 20.0),
+              width: (MediaQuery.of(context).size.width),
+              child: const Text('Metrics', style: TextStyle(fontSize: 20, color: Colors.black), textAlign: TextAlign.left,),
+            ),
+            Container(
+              margin: const EdgeInsets.only(left: 20.0, top: 20.0, right: 20.0),
+              width: (MediaQuery.of(context).size.width),
+              child: BarChartSample3()
+            ),
           ],
         ),
-      ),
-      // floatingActionButton: FloatingActionButton(
+      )),
+        bottomNavigationBar: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(30), topLeft: Radius.circular(30)),
+              boxShadow: [
+                BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 10),
+              ],
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30.0),
+                topRight: Radius.circular(30.0),
+              ),
+              child: BottomNavigationBar(
+                items: const <BottomNavigationBarItem>[
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.home),
+                    label: 'Home',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.person),
+                    label: 'Profile',
+                  ),
+                ],
+                currentIndex: _selectedIndex,
+                selectedItemColor: Colors.black,
+                backgroundColor: Colors.white,
+
+                onTap: _onItemTapped,
+              ),
+            )
+        )
+    // floatingActionButton: FloatingActionButton(
       //   onPressed: _incrementCounter,
       //   tooltip: 'Increment',
       //   child: const Icon(Icons.add),
