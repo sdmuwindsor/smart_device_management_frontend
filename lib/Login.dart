@@ -5,6 +5,7 @@ import 'package:smart_device_management_frontend/SignUp.dart';
 import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:smart_device_management_frontend/UserDetails.dart';
 
 class LoginPage extends StatelessWidget {
   @override
@@ -23,12 +24,16 @@ class LoginPage extends StatelessWidget {
         "Content-Type": "application/json"
       };
 
-      // final response = await http.post(
-      //     Uri.parse("http://127.0.0.1:8001/users/login"),
-      //     headers: requestHeaders,
-      //     body: jsonEncode(jsonBody)); response.statusCode == 200)
+      final response = await http.post(
+          Uri.parse("http://20.232.108.27:8000/users/login"),
+          headers: requestHeaders,
+          body: jsonEncode(jsonBody));
 
-      if (true) {
+      if (response.statusCode == 200) {
+        Map<String, dynamic> user_data = json.decode(response.body);
+        UserDetails.userId = user_data['id'];
+        UserDetails.userName = user_data['first_name'];
+        UserDetails.userEmail = user_data['email'];
         Navigator.push(
             context,
             MaterialPageRoute(

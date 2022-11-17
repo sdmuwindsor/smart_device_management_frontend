@@ -32,7 +32,7 @@ class SignUpPage extends StatelessWidget {
       };
 
       final response = await http.post(
-          Uri.parse("http://127.0.0.1:8001/users/"),
+          Uri.parse("http://20.232.108.27:8000/users/"),
           headers: requestHeaders,
           body: jsonEncode(jsonBody));
 
