@@ -4,4 +4,5 @@ class UserDetails {
   static List<dynamic> rooms = [];
   static var userName;
   static var userEmail;
+  static List<dynamic> powerConsumption = [];
 }

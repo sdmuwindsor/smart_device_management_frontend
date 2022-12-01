@@ -71,33 +71,34 @@ class Profile extends StatelessWidget {
           child: Container(
             child: Column(
               children: <Widget>[
-                Container(
-                  height: 100,
-                  child: Stack(
-                    children: <Widget>[
-                      Positioned(
-                        child: FadeAnimation(
-                            1.6,
-                            Container(
-                              margin: EdgeInsets.only(top: 50),
-                              child: Center(
-                                // child: Text(
-                                //   "Profile Up",
-                                //   style: TextStyle(
-                                //       color: Colors.white,
-                                //       fontSize: 40,
-                                //       fontWeight: FontWeight.bold),
-                                // ),
-                                child: Icon(
-                                  Icons.person,
-                                  size: 40,
-                                ),
-                              ),
-                            )),
-                      )
-                    ],
-                  ),
-                ),
+                const SizedBox(height: 5),
+                // Container(
+                //   height: 100,
+                //   child: Stack(
+                //     children: <Widget>[
+                //       Positioned(
+                //         child: FadeAnimation(
+                //             1.6,
+                //             Container(
+                //               margin: EdgeInsets.only(top: 50),
+                //               child: Center(
+                //                 // child: Text(
+                //                 //   "Profile Up",
+                //                 //   style: TextStyle(
+                //                 //       color: Colors.white,
+                //                 //       fontSize: 40,
+                //                 //       fontWeight: FontWeight.bold),
+                //                 // ),
+                //                 child: Icon(
+                //                   Icons.person,
+                //                   size: 40,
+                //                 ),
+                //               ),
+                //             )),
+                //       )
+                //     ],
+                //   ),
+                // ),
                 Padding(
                   // padding: EdgeInsets.all(30.0),
                   padding: EdgeInsets.symmetric(horizontal: 32),
@@ -105,78 +106,52 @@ class Profile extends StatelessWidget {
                   child: Column(
                     children: <Widget>[
                       FadeAnimation(
-                          1.8,
-                          Container(
-                            padding: EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: Color.fromRGBO(143, 148, 251, .2),
-                                      blurRadius: 20.0,
-                                      offset: Offset(0, 10))
-                                ]),
-                            child: Column(
-                              children: <Widget>[
-                                // Container(
-                                //   padding: EdgeInsets.all(8.0),
-                                //   decoration: BoxDecoration(
-                                //       border: Border(
-                                //           bottom: BorderSide(
-                                //               color: Colors.grey.shade100))),
-                                //   child: TextField(
-                                //     controller: nameController,
-                                //     decoration: InputDecoration(
-                                //         border: InputBorder.none,
-                                //         label: Text("Full Name"),
-                                //         hintText: user.name,
-                                //         hintStyle:
-                                //             TextStyle(color: Colors.grey[400])),
-                                //   ),
-                                // ),
-                                TextFieldWidget(
-                                  label: 'Full Name',
-                                  text: UserDetails.userName,
-                                  onChanged: (name) {},
-                                ),
-                                // Container(
-                                //   padding: EdgeInsets.all(8.0),
-                                //   decoration: BoxDecoration(
-                                //       border: Border(
-                                //           bottom: BorderSide(
-                                //               color: Colors.grey.shade100))),
-                                //   child: TextField(
-                                //     controller: emailController,
-                                //     decoration: InputDecoration(
-                                //         border: InputBorder.none,
-                                //         hintText: "Email Address",
-                                //         hintStyle:
-                                //             TextStyle(color: Colors.grey[400])),
-                                //   ),
-                                // ),
-                                const SizedBox(height: 7),
-                                TextFieldWidget(
-                                  label: 'Email Name',
-                                  text: UserDetails.userEmail,
-                                  onChanged: (email) {},
-                                ),
-                                // Container(
-                                //   padding: EdgeInsets.all(8.0),
-                                //   child: TextField(
-                                //     controller: passwordController,
-                                //     obscuringCharacter:
-                                //         '*', //added obscuringCharacter here
-                                //     obscureText: true,
-                                //     decoration: InputDecoration(
-                                //         border: InputBorder.none,
-                                //         hintText: "Password",
-                                //         hintStyle:
-                                //             TextStyle(color: Colors.grey[400])),
-                                //   ),
-                                // )
-                                const SizedBox(height: 7),
+                        1.8,
+                        Container(
+                          width: 130,
+                          height: 130,
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  width: 4,
+                                  color: Theme.of(context)
+                                      .scaffoldBackgroundColor),
+                              boxShadow: [
+                                BoxShadow(
+                                    spreadRadius: 2,
+                                    blurRadius: 10,
+                                    color: Colors.black.withOpacity(0.6),
+                                    offset: Offset(0, 10))
                               ],
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: NetworkImage(
+                                    "https://www.clipartmax.com/png/middle/257-2572603_user-man-social-avatar-profile-icon-man-avatar-in-circle.png",
+                                  ))),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 7,
+                      ),
+                      FadeAnimation(
+                          2,
+                          Container(
+                            child: TextFieldWidget(
+                              label: 'Full Name',
+                              text: UserDetails.userName,
+                              onChanged: (name) {},
+                            ),
+                          )),
+                      SizedBox(
+                        height: 7,
+                      ),
+                      FadeAnimation(
+                          2,
+                          Container(
+                            child: TextFieldWidget(
+                              label: 'Email Name',
+                              text: UserDetails.userEmail,
+                              onChanged: (email) {},
                             ),
                           )),
                       SizedBox(
@@ -198,8 +173,8 @@ class Profile extends StatelessWidget {
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
                                           builder: (BuildContext context) {
-                                        return LoginPage();
-                                      }),
+                                            return LoginPage();
+                                          }),
                                     ); // do something
                                   },
                                   child: Text(

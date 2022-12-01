@@ -6,6 +6,8 @@ import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:smart_device_management_frontend/UserDetails.dart';
+import 'package:loader_overlay/loader_overlay.dart';
+import 'package:intl/intl.dart';
 
 class LoginPage extends StatelessWidget {
   @override
@@ -14,6 +16,7 @@ class LoginPage extends StatelessWidget {
 
   Widget build(BuildContext context) {
     void loginUser() async {
+      context.loaderOverlay.show();
       final jsonBody = {
         "username": emailController.text,
         "password": passwordController.text
@@ -34,12 +37,37 @@ class LoginPage extends StatelessWidget {
         UserDetails.userId = user_data['id'];
         UserDetails.userName = user_data['first_name'];
         UserDetails.userEmail = user_data['email'];
+        final response_rooms = await http.get(
+            Uri.parse("http://20.232.108.27:8000/rooms/get_user_rooms/"+(UserDetails.userId).toString()),
+            headers: {
+              "accept": "application/json",
+              "Content-Type": "application/json"
+            });
+        List<dynamic> user_rooms = json.decode(response_rooms.body);
+        UserDetails.rooms = user_rooms;
+        var now = (new DateTime.now());
+        var formatter = new DateFormat('yyyy-MM-dd');
+        String startData = formatter.format(now);
+        startData = startData+" 00:00:00";
+        var sevenDay = (new DateTime.now()).subtract(Duration(days: 7));
+        String endData = formatter.format(sevenDay);
+        endData = endData+" 00:00:00";
+        final response_consumption = await http.get(
+            Uri.parse("http://20.232.108.27:8000/users/get_power_consumption_by_date/"+"?start_date="+endData+"&end_date="+startData+"&user_id="+(UserDetails.userId).toString()),
+            headers: {
+              "accept": "application/json",
+              "Content-Type": "application/json"
+            });
+        List<dynamic> powerConsumption = json.decode(response_consumption.body);
+        UserDetails.powerConsumption = powerConsumption;
+        context.loaderOverlay.hide();
         Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) =>
                     MyHomePage(title: "Smart Device Management")));
       } else {
+        context.loaderOverlay.hide();
         showDialog(
           context: context,
           builder: (ctx) => AlertDialog(
@@ -63,7 +91,8 @@ class LoginPage extends StatelessWidget {
 
     return Scaffold(
         backgroundColor: Colors.white,
-        body: SingleChildScrollView(
+        body: LoaderOverlay(
+          child: SingleChildScrollView(
           child: Container(
             child: Column(
               children: <Widget>[
@@ -258,6 +287,6 @@ class LoginPage extends StatelessWidget {
               ],
             ),
           ),
-        ));
+        )));
   }
 }

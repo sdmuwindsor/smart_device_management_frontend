@@ -21,16 +21,18 @@ class _AddDeviceState extends State<AddDevice> {
     selectedCategory = DeviceCategory[0];
   }
   final _deviceController = TextEditingController();
+  final _deviceRatingController = TextEditingController();
 
   final DeviceCategory = [
     "Thermostat",
-    "Light Bulb"
+    "Light"
   ];
   String selectedCategory = "TV";
 
   List<dynamic> RoomSelection = UserDetails.rooms;
 
   String selectedRoom = (UserDetails.rooms)[0]['name'];
+  int selectedRoomId = (UserDetails.rooms)[0]['id'];
 
   // void _updateText() {
   //   // setState(() {
@@ -40,22 +42,26 @@ class _AddDeviceState extends State<AddDevice> {
 
   void addDevice() async {
     final jsonBody = {
-      "room_id": 1,
+      "room_id": selectedRoomId,
       "name": _deviceController.text,
       "category" : selectedCategory,
+      "power_rating" : int.parse(_deviceRatingController.text)
     };
+
+    print(jsonBody);
 
     Map<String, String> requestHeaders = {
       "accept": "application/json",
       "Content-Type": "application/json"
     };
-
+    print(jsonBody);
     final response = await http.post(
         Uri.parse("http://20.232.108.27:8000/devices/"),
         headers: requestHeaders,
 
         body: jsonEncode(jsonBody));
 
+    print(response);
     if (response.statusCode == 200) {
       Navigator.push(
           context,
@@ -128,6 +134,19 @@ class _AddDeviceState extends State<AddDevice> {
             SizedBox(
               height: 20.0,
             ),
+            TextFormField(
+              controller: _deviceRatingController,
+              decoration: InputDecoration(
+                labelText: 'Device Rating',
+                // icon: Icon(Icons.verified_user_outlined),
+                prefixIcon: Icon(Icons.star_border),
+                border: OutlineInputBorder(),
+              ),
+            ),
+            // Text("Device Name is ${_deviceController.text}"),
+            SizedBox(
+              height: 20.0,
+            ),
             DropdownButtonFormField(
               value: selectedCategory,
               items: DeviceCategory.map((e) {
@@ -162,12 +181,18 @@ class _AddDeviceState extends State<AddDevice> {
               items: RoomSelection.map((e) {
                 return DropdownMenuItem(
                   value: e['name'],
+
                   child: Text(e['name']),
                 );
               }).toList(),
               onChanged: (val) {
                 setState(() {
-                  selectedRoom = val as String;
+                  RoomSelection.map((e) {
+                    if(e['name'] == val) {
+                      selectedRoomId = e['id'];
+                      selectedRoom = e['name'];
+                    }
+                  });
                 });
               },
               icon: Icon(

@@ -125,29 +125,29 @@ class _AddNewRoomState extends State<AddNewRoom> {
               ),
             ),
             // Text("Device Name is ${_deviceController.text}"),
-            SizedBox(
-              height: 20.0,
-            ),
-            TextFormField(
-              decoration: InputDecoration(
-                labelText: 'Room Owner',
-                // icon: Icon(Icons.verified_user_outlined),
-                prefixIcon: Icon(Icons.verified_user_outlined),
-                border: OutlineInputBorder(),
-              ),
-            ),
-            // Text("Device Name is ${_deviceController.text}"),
-            SizedBox(
-              height: 20.0,
-            ),
-            TextFormField(
-              decoration: InputDecoration(
-                labelText: 'No. of Roommates',
-                // icon: Icon(Icons.verified_user_outlined),
-                prefixIcon: Icon(Icons.verified_user_outlined),
-                border: OutlineInputBorder(),
-              ),
-            ),
+            // SizedBox(
+            //   height: 20.0,
+            // ),
+            // TextFormField(
+            //   decoration: InputDecoration(
+            //     labelText: 'Room Owner',
+            //     // icon: Icon(Icons.verified_user_outlined),
+            //     prefixIcon: Icon(Icons.verified_user_outlined),
+            //     border: OutlineInputBorder(),
+            //   ),
+            // ),
+            // // Text("Device Name is ${_deviceController.text}"),
+            // SizedBox(
+            //   height: 20.0,
+            // ),
+            // TextFormField(
+            //   decoration: InputDecoration(
+            //     labelText: 'No. of Roommates',
+            //     // icon: Icon(Icons.verified_user_outlined),
+            //     prefixIcon: Icon(Icons.verified_user_outlined),
+            //     border: OutlineInputBorder(),
+            //   ),
+            // ),
             // Text("Device Name is ${_deviceController.text}"),
             SizedBox(
               height: 20.0,

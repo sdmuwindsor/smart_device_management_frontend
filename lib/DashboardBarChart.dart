@@ -1,7 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:smart_device_management_frontend/DevicePowerConsupmtionDetail.dart';
+import 'package:smart_device_management_frontend/UserDetails.dart';
 
 class _BarChart extends StatelessWidget {
   const _BarChart();
@@ -137,7 +137,7 @@ class _BarChart extends StatelessWidget {
       x: 0,
       barRods: [
         BarChartRodData(
-          toY: DevicePowerConsumptionDetail.powerConsumption[6]['power_consumption'],
+          toY: UserDetails.powerConsumption[6]['power_consumption'],
           gradient: _barsGradient,
         )
       ],
@@ -147,7 +147,7 @@ class _BarChart extends StatelessWidget {
       x: 1,
       barRods: [
         BarChartRodData(
-          toY: DevicePowerConsumptionDetail.powerConsumption[5]['power_consumption'],
+          toY: UserDetails.powerConsumption[5]['power_consumption'],
           gradient: _barsGradient,
         )
       ],
@@ -157,7 +157,7 @@ class _BarChart extends StatelessWidget {
       x: 2,
       barRods: [
         BarChartRodData(
-          toY: DevicePowerConsumptionDetail.powerConsumption[4]['power_consumption'],
+          toY: UserDetails.powerConsumption[4]['power_consumption'],
           gradient: _barsGradient,
         )
       ],
@@ -167,7 +167,7 @@ class _BarChart extends StatelessWidget {
       x: 3,
       barRods: [
         BarChartRodData(
-          toY: DevicePowerConsumptionDetail.powerConsumption[3]['power_consumption'],
+          toY: UserDetails.powerConsumption[3]['power_consumption'],
           gradient: _barsGradient,
         )
       ],
@@ -177,7 +177,7 @@ class _BarChart extends StatelessWidget {
       x: 4,
       barRods: [
         BarChartRodData(
-          toY: DevicePowerConsumptionDetail.powerConsumption[2]['power_consumption'],
+          toY: UserDetails.powerConsumption[2]['power_consumption'],
           gradient: _barsGradient,
         )
       ],
@@ -187,7 +187,7 @@ class _BarChart extends StatelessWidget {
       x: 5,
       barRods: [
         BarChartRodData(
-          toY: DevicePowerConsumptionDetail.powerConsumption[1]['power_consumption'],
+          toY: UserDetails.powerConsumption[1]['power_consumption'],
           gradient: _barsGradient,
         )
       ],
@@ -197,7 +197,7 @@ class _BarChart extends StatelessWidget {
       x: 6,
       barRods: [
         BarChartRodData(
-          toY: DevicePowerConsumptionDetail.powerConsumption[0]['power_consumption'],
+          toY: UserDetails.powerConsumption[0]['power_consumption'],
           gradient: _barsGradient,
         )
       ],

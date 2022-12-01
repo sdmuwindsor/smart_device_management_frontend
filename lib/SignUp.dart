@@ -244,7 +244,7 @@ class SignUpPage extends StatelessWidget {
                                         builder: (context) => LoginPage()));
                               },
                               child: Text(
-                                "Dont have an Account ? Sign Up",
+                                "Already Have an Account ? Log In",
                                 style: TextStyle(
                                     color: Color.fromRGBO(143, 148, 251, 1)),
                               ))),

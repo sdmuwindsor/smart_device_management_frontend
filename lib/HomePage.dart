@@ -1,16 +1,20 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_device_management_frontend/AddNewDevice.dart';
-import 'package:smart_device_management_frontend/BarChart.dart';
+import 'package:smart_device_management_frontend/DashboardBarChart.dart';
 import 'package:smart_device_management_frontend/Animation/FadeAnimation.dart';
 import 'package:smart_device_management_frontend/Category.dart';
 import 'package:smart_device_management_frontend/Notifications.dart';
 import 'package:smart_device_management_frontend/Profile.dart';
-import 'package:smart_device_management_frontend/Rooms.dart';
+import 'package:smart_device_management_frontend/AddNewRoom.dart';
+import 'package:smart_device_management_frontend/ShowCategoryDevices.dart';
+import 'package:smart_device_management_frontend/ShowDevices.dart';
 import 'package:smart_device_management_frontend/utils/user_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:smart_device_management_frontend/UserDetails.dart';
+import 'package:pie_chart/pie_chart.dart';
+
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -41,19 +45,22 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    loadRooms();
-  }
-  void loadRooms() async {
-    final response_rooms = await http.get(
-        Uri.parse("http://20.232.108.27:8000/rooms/get_user_rooms/"+(UserDetails.userId).toString()),
-        headers: {
-          "accept": "application/json",
-          "Content-Type": "application/json"
-        });
-    List<dynamic> user_rooms = json.decode(response_rooms.body);
-    UserDetails.rooms = user_rooms;
+
   }
   List<dynamic> rooms = UserDetails.rooms;
+
+  Map<String, double> dataMap = {
+    "Light": 5,
+    "Thermostat": 3,
+  };
+
+  final colorList = <Color>[
+    const Color(0xfffdcb6e),
+    const Color(0xff0984e3),
+    const Color(0xfffd79a8),
+    const Color(0xffe17055),
+    const Color(0xff6c5ce7),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -68,11 +75,20 @@ class _MyHomePageState extends State<MyHomePage> {
             color: Colors.white,
           ),
           margin: const EdgeInsets.only(right: 10.0),
-          child:  Center(
-              child: Text(
-                rooms[i]['name'],
-                style: TextStyle(fontSize: 20, color: Colors.black),
-              )),
+          child:  GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (BuildContext context) {
+                  return ShowDevices(roomId: rooms[i]["id"].toString());
+                }),
+              );
+            },
+            child: Center(
+                child: Text(
+                  rooms[i]['name'],
+                  style: TextStyle(fontSize: 20, color: Colors.black),
+                ))
+          ),
         ),);
       }
       childs.add(new Container(
@@ -91,7 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
           onTap: () {
             Navigator.of(context).push(
               MaterialPageRoute(builder: (BuildContext context) {
-                return const Room();
+                return const AddNewRoom();
               }),
             );
           },
@@ -195,11 +211,20 @@ class _MyHomePageState extends State<MyHomePage> {
                                 color: Colors.white,
                               ),
                               margin: const EdgeInsets.only(right: 10.0),
-                              child: const Center(
-                                  child: Icon(
-                                    Icons.thermostat,
-                                    size: 80,
-                                  )),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(builder: (BuildContext context) {
+                                      return ShowCategoryDevices(categoryId: "thermostat");
+                                    }),
+                                  );
+                                },
+                                child: const Center(
+                                    child: Icon(
+                                      Icons.thermostat,
+                                      size: 80,
+                                    )),
+                              )
                             ),
                             Container(
                               width: 200,
@@ -208,11 +233,20 @@ class _MyHomePageState extends State<MyHomePage> {
                                 color: Colors.white,
                               ),
                               margin: const EdgeInsets.only(right: 10.0),
-                              child: const Center(
-                                  child: Icon(
-                                    Icons.lightbulb,
-                                    size: 80,
-                                  )),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(builder: (BuildContext context) {
+                                      return ShowCategoryDevices(categoryId: "light");
+                                    }),
+                                  );
+                                },
+                                child: const Center(
+                                    child: Icon(
+                                      Icons.lightbulb,
+                                      size: 80,
+                                    )),
+                              )
                             ),
                           ],
                         ),
@@ -237,17 +271,60 @@ class _MyHomePageState extends State<MyHomePage> {
                       Container(
                         margin: const EdgeInsets.only(left: 20.0, top: 20.0),
                         width: (MediaQuery.of(context).size.width),
-                        child: const Text(
-                          'Metrics',
-                          style: TextStyle(fontSize: 20, color: Colors.black),
-                          textAlign: TextAlign.left,
-                        ),
+                        child: Container(
+                          child: Row(
+                            children: <Widget> [
+                              const Text(
+                                'Metrics',
+                                style: TextStyle(fontSize: 20, color: Colors.black),
+                                textAlign: TextAlign.left,
+                              )
+                            ],
+                          )
+
+                        )
                       ),
                       Container(
                           margin:
                           const EdgeInsets.only(left: 20.0, top: 20.0, right: 20.0),
                           width: (MediaQuery.of(context).size.width),
-                          child: BarChartSample3()),
+                          child: BarChartSample3()
+                      ),
+                      Container(
+                          height: 200,
+                          color: Color(0xff203858),
+                          margin:
+                          const EdgeInsets.only(left: 20.0, top: 20.0, right: 20.0),
+                          width: (MediaQuery.of(context).size.width),
+                          child: PieChart(
+                            dataMap: dataMap,
+                            animationDuration: Duration(milliseconds: 800),
+                            chartLegendSpacing: 32,
+                            chartRadius: MediaQuery.of(context).size.width / 3.2,
+                            colorList: colorList,
+                            initialAngleInDegree: 0,
+                            chartType: ChartType.disc,
+                            ringStrokeWidth: 40,
+                            legendOptions: LegendOptions(
+                              showLegendsInRow: true,
+                              legendPosition: LegendPosition.bottom,
+                              showLegends: true,
+                              legendShape: BoxShape.circle,
+                              legendTextStyle: TextStyle(
+                                color: Colors.white
+                              ),
+                            ),
+                            chartValuesOptions: ChartValuesOptions(
+                              showChartValueBackground: true,
+                              showChartValues: true,
+                              showChartValuesInPercentage: false,
+                              showChartValuesOutside: false,
+                                decimalPlaces: 0
+                            ),
+                            // gradientList: ---To add gradient colors---
+                            // emptyColorGradient: ---Empty Color gradient---
+                          )
+                      ),
                     ],
                   ),
                 ))),
